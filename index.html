@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>سلوكي تميزي وبأخلاقي أرتقي</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f5f8f7;color:#193d36;line-height:1.8}
+header{background:linear-gradient(130deg,#075c4b,#159579);color:white;text-align:center;padding:32px 15px;border-bottom:6px solid #e9c76d}
+header h1{font-size:clamp(23px,5vw,38px);margin:8px 0}
+header p{margin:5px}
+.logo{font-size:46px}
+nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;max-width:1000px;margin:20px auto;padding:0 12px}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:12px;background:#087c67;color:white}
+nav button{background:white;color:#075c4b;border:1px solid #d5e5dd;font-weight:bold;box-shadow:0 2px 8px #0000000a}
+nav button:hover,nav button.active{background:#087c67;color:white}
+main{max-width:950px;margin:auto;padding:0 14px 35px}
+section{display:none;background:white;border-radius:18px;padding:24px;margin-bottom:20px;box-shadow:0 3px 18px #0000000c}
+section.active{display:block}
+h2{color:#087c67;margin-top:0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.card{background:#f2faf6;border:1px solid #d6e9df;padding:16px;border-radius:14px}
+.card h3{margin:0 0 7px;color:#075c4b}
+.card p{margin:0}
+.option{display:block;width:100%;text-align:right;background:#f1f7f4;color:#17483d;border:1px solid #d7e7df;margin:8px 0}
+.option:hover{background:#d7f1e6}
+.result{padding:12px;border-radius:12px;background:#e8f7ed;margin-top:12px;font-weight:bold}
+.muted{color:#60736b}
+.action{margin-top:12px}
+input{font:inherit;padding:12px;border:1px solid #bfd6ca;border-radius:10px;width:100%;max-width:350px}
+footer{text-align:center;background:#075c4b;color:white;padding:22px 12px}
+@media(max-width:480px){section{padding:17px}nav{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">🌟</div>
+<p>وزارة التعليم | الإدارة العامة للتعليم بمنطقة جازان</p>
+<p>ابتدائية رديس للبنات</p>
+<h1>سلوكي تميّزي وبأخلاقي أرتقي</h1>
+<p>نتنافس بأخلاقنا، ونتميّز بسلوكنا، ونرتقي بقيمنا</p>
+</header>
+<nav aria-label="أقسام المنصة">
+<button class="active" onclick="show('home',this)">🏠 الرئيسية</button>
+<button onclick="show('values',this)">📚 مكتبة القيم</button>
+<button onclick="show('quiz',this)">🧠 المسابقات</button>
+<button onclick="show('badges',this)">🏅 الأوسمة</button>
+<button onclick="show('family',this)">👨‍👩‍👧 ركن الأسرة</button>
+<button onclick="show('awareness',this)">🛡️ التوعية</button>
+<button onclick="show('survey',this)">📝 استبانة</button>
+<button onclick="show('leaders',this)">🏫 القيادة المدرسية</button>
+</nav>
+<main>
+<section id="home" class="active">
+<h2>مرحبًا بكم في منصتنا</h2>
+<p>منصة تربوية تهدف إلى تعزيز السلوك الإيجابي وترسيخ القيم الإسلامية والوطنية، وتشجيع الطالبات على التميز بأخلاقهن.</p>
+<div class="cards">
+<div class="card"><h3>🌱 رسالتنا</h3><p>نغرس القيم، وننشر الاحترام، ونحتفي بالسلوك الجميل.</p></div>
+<div class="card"><h3>⭐ عبارة اليوم</h3><p id="quote">كل سلوك جميل يترك أثرًا طيبًا.</p><button class="action" onclick="newQuote()">عبارة أخرى</button></div>
+</div>
+</section>
+<section id="values">
+<h2>📚 مكتبة القيم</h2>
+<p>تعرفي على القيم التي تجعل مدرستنا بيئة آمنة ومحفزة.</p>
+<div class="cards" id="valueCards"></div>
+</section>
+<section id="quiz">
+<h2>🧠 مسابقة سفيرة الأخلاق</h2>
+<p id="qText"></p>
+<div id="options"></div>
+<div id="feedback" aria-live="polite"></div>
+<button class="action" id="nextBtn" onclick="nextQuestion()" style="display:none">السؤال التالي</button>
+</section>
+<section id="badges">
+<h2>🏅 أوسمة التميز</h2>
+<div class="cards">
+<div class="card">🥇 سفيرة الأخلاق</div>
+<div class="card">⭐ نجمة الانضباط</div>
+<div class="card">💎 وسام الأمانة</div>
+<div class="card">🕊️ قدوة التسامح</div>
+<div class="card">🤝 سفيرة الاحترام</div>
+<div class="card">🌿 حارسة النظافة</div>
+<div class="card">🇸🇦 فخر الوطن</div>
+<div class="card">🏆 التميز السلوكي</div>
+</div>
+<p class="muted">هذه أوسمة تحفيزية، ويكون منحها رسميًا وفق معايير المدرسة.</p>
+</section>
+<section id="family">
+<h2>👨‍👩‍👧 ركن الأسرة</h2>
+<div class="cards">
+<div class="card"><h3>القدوة الحسنة</h3><p>كونوا قدوة في الاحترام والصدق والتسامح.</p></div>
+<div class="card"><h3>الحوار الإيجابي</h3><p>استمعوا إلى الأبناء وشجعوا التعبير المهذب عن المشاعر.</p></div>
+<div class="card"><h3>التحفيز</h3><p>احتفوا بالجهد والسلوك الجيد، وشجعوا المبادرات الطيبة.</p></div>
+<div class="card"><h3>قيمة الأسبوع</h3><p>اختاروا قيمة أسرية وطبقوها في المواقف اليومية.</p></div>
+</div>
+</section>
+<section id="awareness">
+<h2>🛡️ التوعية والإرشاد</h2>
+<div class="cards">
+<div class="card"><h3>الانضباط</h3><p>ألتزم بالحضور والمواعيد وأنظمة المدرسة.</p></div>
+<div class="card"><h3>مكافحة التنمر</h3><p>أحترم الجميع، وأرفض الإساءة، وأطلب المساعدة عند الحاجة.</p></div>
+<div class="card"><h3>السلوك الرقمي</h3><p>أحافظ على خصوصيتي وأتحدث بأدب عبر الإنترنت.</p></div>
+<div class="card"><h3>الممتلكات المدرسية</h3><p>أحافظ على نظافة مدرستي ومرافقها وأدواتها.</p></div>
+</div>
+</section>
+<section id="survey">
+<h2>📝 استبانة رأي</h2>
+<p>هل ساعدتك المنصة على فهم السلوك الإيجابي؟</p>
+<label><input type="radio" name="opinion" value="نعم" style="width:auto"> نعم، بدرجة كبيرة</label><br>
+<label><input type="radio" name="opinion" value="إلى حد ما" style="width:auto"> إلى حد ما</label><br>
+<label><input type="radio" name="opinion" value="أحتاج المزيد" style="width:auto"> أحتاج أنشطة إضافية</label><br>
+<button class="action" onclick="submitSurvey()">إرسال الرأي</button>
+<p id="surveyResult" aria-live="polite"></p>
+<p class="muted">استبانة تجريبية: لا تُرسل البيانات إلى المدرسة أو تُجمع مركزيًا.</p>
+</section>
+<section id="leaders">
+<h2>🏫 القيادة المدرسية والتوجيه الطلابي</h2>
+<div class="cards">
+<div class="card"><h3>الموجهة الطلابية</h3><p>ذهبه حسين دراج</p></div>
+<div class="card"><h3>وكيلة المدرسة</h3><p>خديجة جديبا</p></div>
+<div class="card"><h3>مديرة المدرسة</h3><p>عائشة محمد مشرقي</p></div>
+</div>
+</section>
+</main>
+<footer>ابتدائية رديس للبنات | إعداد الموجهة الطلابية ذهبه حسين دراج</footer>
+<script>
+function show(id,btn){
+document.querySelectorAll('main section').forEach(s=>s.classList.toggle('active',s.id===id));
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+window.scrollTo({top:0,behavior:'smooth'});
+}
+const values=[
+['الاحترام','أحترم الآخرين وأستمع إليهم بأدب.'],
+['الأمانة','أحفظ الحقوق وأقول الصدق.'],
+['التسامح','أعفو وأتعامل بلطف.'],
+['الانضباط','ألتزم بالمواعيد والتعليمات.'],
+['الإيجابية','أنشر التفاؤل وأبادر بالخير.'],
+['المثابرة','أواصل المحاولة وأتعلم من أخطائي.'],
+['الوسطية','أعتدل في سلوكي وأحترم الآخرين.'],
+['الانتماء للوطن','أعتز بوطني وأحافظ على ممتلكاته.'],
+['الإتقان','أؤدي عملي بعناية.'],
+['المرونة','أتقبل التغيير وأبحث عن حلول.'],
+['الكرم','أشارك الآخرين بالخير.'],
+['الترابط الأسري','أتعاون مع أسرتي وأحترمها.'],
+['النظافة','أحافظ على نظافة المدرسة.'],
+['المحافظة على الممتلكات','أعتني بمرافق المدرسة وأدواتها.']
+];
+document.getElementById('valueCards').innerHTML=values.map(v=>'<div class="card"><h3>🌿 '+v[0]+'</h3><p>'+v[1]+'</p></div>').join('');
+const questions=[
+{q:'وجدت قلمًا لا يخصك، ماذا تفعلين؟',a:['أحتفظ به','أعيده إلى صاحبته','أتجاهله'],correct:1},
+{q:'اختلفت مع زميلتك في الرأي، ماذا تفعلين؟',a:['أستمع إليها باحترام','أرفع صوتي','أرفض الحديث معها'],correct:0},
+{q:'إذا كانت المهمة صعبة، ما السلوك الصحيح؟',a:['أستسلم','أحاول وأطلب المساعدة','أتركها'],correct:1},
+{q:'كيف أحافظ على المدرسة؟',a:['أكتب على الجدران','أترك المخلفات','أحافظ على النظافة والمرافق'],correct:2}
+];
+let current=0,score=0,answered=false;
+function renderQuestion(){
+answered=false;
+const q=questions[current];
+document.getElementById('qText').textContent='السؤال '+(current+1)+' من '+questions.length+': '+q.q;
+document.getElementById('options').innerHTML=q.a.map((a,i)=>'<button class="option" onclick="choose('+i+')">'+a+'</button>').join('');
+document.getElementById('feedback').innerHTML='';
+document.getElementById('nextBtn').style.display='none';
+}
+function choose(i){
+if(answered)return;
+answered=true;
+if(i===questions[current].correct)score++;
+document.getElementById('feedback').innerHTML='<div class="result">'+(i===questions[current].correct?'🌟 إجابة صحيحة!':'الإجابة الصحيحة: '+questions[current].a[questions[current].correct])+'</div>';
+document.getElementById('nextBtn').style.display='inline-block';
+document.getElementById('nextBtn').textContent=current===questions.length-1?'عرض النتيجة':'السؤال التالي';
+}
+function nextQuestion(){
+current++;
+if(current<questions.length){renderQuestion();return;}
+document.getElementById('qText').textContent='🏆 نتيجتك: '+score+' من '+questions.length;
+document.getElementById('options').innerHTML='';
+document.getElementById('feedback').innerHTML='<div class="result">أحسنت المشاركة! بأخلاقنا نرتقي.</div>';
+document.getElementById('nextBtn').textContent='إعادة المسابقة';
+document.getElementById('nextBtn').onclick=function(){current=0;score=0;this.onclick=nextQuestion;renderQuestion();};
+}
+const quotes=['كل سلوك جميل يترك أثرًا طيبًا.','الاحترام عنوان التميز.','بأخلاقنا نسمو وبقيمنا نرتقي.','كوني قدوة في أخلاقك وسلوكك.'];
+let qi=0;
+function newQuote(){qi=(qi+1)%quotes.length;document.getElementById('quote').textContent=quotes[qi];}
+function submitSurvey(){
+const chosen=document.querySelector('input[name="opinion"]:checked');
+document.getElementById('surveyResult').textContent=chosen?'شكرًا لمشاركتك! هذا نموذج تجريبي ولا يحفظ الردود.':'اختاري إجابة أولًا.';
+}
+renderQuestion();
+</script>
+</body>
+</html>
